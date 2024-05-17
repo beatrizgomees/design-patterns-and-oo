@@ -1,0 +1,695 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Design Orientado a objetos</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="96c57fb4-192a-4c63-b2f4-92b3a767cf96" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🎨</span></div><h1 class="page-title">Design Orientado a objetos</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Da para a aplicar?</th><td><span class="selected-value select-value-color-green">YES</span></td></tr></tbody></table></header><div class="page-body"><ul id="8064ad40-9645-479f-a78e-2639cbc8ac80" class="bulleted-list"><li style="list-style-type:disc"><strong>D - Dependency Inversion Principle (Princípio da Inversão de Dependência)</strong>:<ul id="ecce1b19-bfcc-4188-9373-7d47d11e30b1" class="bulleted-list"><li style="list-style-type:circle"><strong>Avaliação</strong>: O código usa a inversão de dependência ao depender de abstrações (<code>CrudService</code>) em vez de implementações concretas. Isso permite a flexibilidade de trocar facilmente a implementação subjacente sem modificar o código cliente.</li></ul><ul id="a50ba645-a570-4697-a77d-10cefb4b6c36" class="bulleted-list"><li style="list-style-type:circle"><strong>Conclusão</strong>: Parece estar em conformidade com o princípio da inversão de dependência.</li></ul></li></ul><ul id="7169e950-9f61-4363-8a7d-abdd8cccc1e0" class="bulleted-list"><li style="list-style-type:disc"><strong>I - Interface Segregation Principle (Princípio da Segregação de Interfaces)</strong>:<ul id="e726a4f1-9276-4d80-8bd0-922efe6fad40" class="bulleted-list"><li style="list-style-type:circle"><strong>Avaliação</strong>: A interface <code>CrudService</code> fornece métodos CRUD genéricos para qualquer tipo de entidade, o que é bom. No entanto, algumas classes que implementam essa interface podem não precisar de todos os métodos, o que pode violar o princípio da segregação de interfaces.</li></ul><ul id="8b5796e5-d15b-4128-b23a-ab24e62b83cb" class="bulleted-list"><li style="list-style-type:circle"><strong>Conclusão</strong>: Pode ser necessário revisar a interface para garantir que seja segregada o suficiente para as necessidades de todas as implementações.</li></ul></li></ul><ul id="356da2ae-b134-48e2-9a49-d4007535e770" class="bulleted-list"><li style="list-style-type:disc"><strong>I - Interface Segregation Principle (Princípio da Segregação de Interfaces)</strong>:<ul id="234e3f26-ef22-4155-b23a-17527a52f5d1" class="bulleted-list"><li style="list-style-type:circle"><strong>Avaliação</strong>: A interface <code>CrudService</code> fornece métodos CRUD genéricos para qualquer tipo de entidade, o que é bom. No entanto, algumas classes que implementam essa interface podem não precisar de todos os métodos, o que pode violar o princípio da segregação de interfaces.</li></ul><ul id="0151476f-396d-405a-8559-b33ebb8e9a74" class="bulleted-list"><li style="list-style-type:circle"><strong>Conclusão</strong>: Pode ser necessário revisar a interface para garantir que seja segregada o suficiente para as necessidades de todas as implementações.</li></ul></li></ul><ul id="fef3290c-e257-482b-812f-2580ad6b4597" class="bulleted-list"><li style="list-style-type:disc"><strong>O - Open/Closed Principle (Princípio Aberto/Fechado)</strong>:<ul id="27222d64-78c7-4590-8260-4fff84880144" class="bulleted-list"><li style="list-style-type:circle"><strong>Avaliação</strong>: Embora as classes <code>CatService</code> e <code>BaseCrudService</code> estejam abertas para extensão (você pode estender <code>BaseCrudService</code> para criar um serviço CRUD para outras entidades), elas não são facilmente fechadas para modificação. Por exemplo, se você quisesse adicionar uma nova operação ao serviço, teria que modificar a classe existente.</li></ul><ul id="f6166caf-bacf-4841-8cd0-579b7ea0658e" class="bulleted-list"><li style="list-style-type:circle"><strong>Conclusão</strong>: A conformidade com este princípio pode ser melhorada, tornando o código mais flexível para extensões futuras.</li></ul></li></ul><p id="83efabdf-7165-4847-afd0-045d731d55e3" class="">Design Orientados a objetos </p><blockquote id="01643c8e-e869-4d6f-827a-1839b405a0c7" class="">‘“simplicity is prerequisite for reliability’<br/>—Dingle, Adair;, “Object-Oriented Design Choices”, p. 3<br/></blockquote><p id="8812c045-2402-413a-b03e-d33a873c6a3e" class="">
+</p><blockquote id="14efc1c0-e03a-4d2f-a843-c0de2381c420" class="">‘OOD encapsulates private data, providing public methods for the client without direct access to encapsulated data’<br/>—Dingle, Adair;, “Object-Oriented Design Choices”, p. 4<br/></blockquote><p id="63d88501-fa69-491e-afe8-9f38f63e3c0c" class="">
+</p><p id="126ba994-6a0a-4181-b157-2a457c903fd4" class="">
+</p><p id="2a989f71-013d-42db-bc89-59221881d1e3" class="">A minha classe Animal obedece o SOLID. Utilizada apenas para “desenhar” um animal com atributos que todo animal tem.</p><p id="56cf83c5-2951-4cbd-b5db-32614826cb45" class="">A minha classe Gato obedece o SOLID pois é utilizada apenas para “desenhar” um gato. Se eu fizer uma alteração em animal, automaticamente gato também receberá essa alteração.</p><p id="85388cb1-5405-48d3-ae68-f24c7bfe59e4" class="">Para adicionar um método do tipo “beber leite” terei que fazer na classe gato pois é um comportamente que apenas alguns animais tem, então não posso colocar na minha classe geral</p><blockquote id="6bd7f9c3-a3e0-4d39-be36-427851ca16bf" class=""><mark class="highlight-yellow"><strong>Each method in a well-designed class supports abstraction and encapsulation and, as much as possible, allows the client to treat the custom type as if it were a built-in type</strong></mark></blockquote><p id="abe66efd-bea8-43f6-be9d-d55d848f17de" class="">Abstração → Encapsulamento → <mark class="highlight-blue"><strong>Tipos personalizados como Tipos integrados</strong></mark></p><p id="4a0403aa-7e0c-4ce3-bd1d-5b9b186930b0" class=""><mark class="highlight-blue"><strong>Utilizar o uso de generics para isso, especialmente quando se está implementando tipos personalizados que você deseja que se comportem de maneira semelhante aos tipos integrados. Generics ajudam a tornar o código mais flexível, reutilizável e seguro em termos de tipos, reduzindo a necessidade de casts explícitos e prevenindo erros de tipo em tempo de compilação.</strong></mark></p><p id="f8aff8d1-93cf-4a45-a6df-9dabbb0e80fe" class="">
+</p><p id="4ce54d38-d5d1-4d87-8a3a-fd888773e184" class="">Principles SOLID<div class="indented"><p id="e7fb6d93-e3a7-4516-8be7-dd9678ef6cf8" class="">S - Single Responsibility Principle = Principio da Responsabilidade Única.</p><ul id="f8bdb9ac-a6db-47c7-8445-4c33902d8dc8" class="bulleted-list"><li style="list-style-type:disc"><strong>Avaliação</strong>: A classe <code>CatService</code> parece estar principalmente preocupada com operações CRUD relacionadas a gatos (<code>Cat</code>). Ela implementa os métodos <code>create</code>, <code>getAll</code>, <code>update</code>, <code>delete</code>, que estão diretamente relacionados à manipulação de gatos.</li></ul><ul id="4e88caa8-70cd-4305-b30a-777fa0928cd6" class="bulleted-list"><li style="list-style-type:disc"><strong>Conclusão</strong>: Parece estar em conformidade com o princípio da responsabilidade única.</li></ul></div></p><p id="73a99882-38b1-4fe6-80a5-a2a0f7ac7c95" class="">
+</p><ul id="350cd62f-6e0e-49e7-9986-27965f866b1f" class="bulleted-list"><li style="list-style-type:disc"><strong>O - Open/Closed Principle (Princípio Aberto/Fechado)</strong>:<ul id="85054918-e086-4b72-ab3b-2bdbc759494f" class="bulleted-list"><li style="list-style-type:circle"><strong>Avaliação</strong>: Embora as classes <code>CatService</code> e <code>BaseCrudService</code> estejam abertas para extensão (você pode estender <code>BaseCrudService</code> para criar um serviço CRUD para outras entidades), elas não são facilmente fechadas para modificação. Por exemplo, se você quisesse adicionar uma nova operação ao serviço, teria que modificar a classe existente.</li></ul><ul id="308d2102-b6c6-4b97-8f26-1ed98702767b" class="bulleted-list"><li style="list-style-type:circle"><strong>Conclusão</strong>: <mark class="highlight-red"><strong>A conformidade com este princípio pode ser melhorada, tornando o código mais flexível para extensões futuras.</strong></mark><ul id="4bd6b8ed-c481-440b-93cf-83cf1ea25a04" class="bulleted-list"><li style="list-style-type:square">Para melhorar é interessante aplicar um padrão de projeto - Strategy - Estrátegia de persistência.<ul id="f8365798-109a-40dc-80ff-3198356e1606" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red"><strong>O objetivo é separar as partes do código que variam daquelas que permanecem estáveis, permitindo que a classe seja aberta para extensão (novos comportamentos) e fechada para modificação (métodos existentes não precisam ser alterados).</strong></mark></li></ul></li></ul></li></ul></li></ul><p id="9e2abeb5-8801-4dc7-a571-defbc5d3809e" class="">
+</p><p id="2c4fe54a-44d9-4b96-8acf-06dfb14f36c2" class="">É possível implementar uma abstração para representar operações de persistência (Uma interface) e permitir que diferentes implementações dessa abstração forneça comportamentos especificos de persistência. Isso garante que a classe esteja aberta para extensão mas fechada para a modificação. </p><p id="b545fd6d-bf64-4ac1-bee5-344b14c2fd45" class=""><div class="indented"><p id="3f335934-1118-4eeb-9b63-5f63482a4826" class=""><strong>Ou seja, aberta para extensão significa que é possível adicionar novas implementações desses métodos de persistência. </strong></p><p id="577b4f8c-09e4-49f2-998b-e429e6a69ae3" class=""><strong>E fechada para modificação signifca que a lógica existente não precisará ser alterada quando novas funcionalidades forem implementadas.</strong></p></div></p><p id="dd7457f0-319e-494c-8cd8-f125849f4bc7" class="">
+</p><p id="c23a72d5-40c3-4c68-b9d1-3e20d3ff2a82" class=""><strong>Implemente Diferentes Estratégias de Persistência</strong><br/>Cada implementação dessa interface fornecerá um comportamento específico de persistência. Por exemplo, você pode ter uma implementação que usa uma lista para armazenar os dados e outra que se conecta a um banco de dados.<br/></p><p id="b0a5ecb7-2569-4e3c-9e9c-61f0f0c6ece9" class="">
+</p><p id="3ca27f23-6eef-431e-9ea2-7981083a3415" class=""><strong>Modificar a Classe Base para Utilizar a Estratégia de Persistência</strong>:<br/>A classe <br/><code>BaseCrudService </code>agora receberá uma instância da operação de persistência desejada e delegará a ela a execução das operações de persistência.</p><p id="2c4c5562-3b4c-45c2-9e8a-585ebd1ccee1" class="">
+</p><p id="e3b3c29e-fe91-44db-8db3-5aede9fed814" class=""><strong>Uso nas Classes Específicas de Serviço</strong>:<br/>As classes específicas de serviço, como <br/><code>CatService</code>, agora receberão uma instância da operação de persistência desejada e delegarão para a classe base.</p><p id="7f54c025-fca3-41ee-82e2-0992faee7a80" class="">
+</p><figure id="72ecc9c9-1af2-447a-b301-d72243efa092" class="image"><a href="images/Diagrama_em_branco(1).png"><img style="width:635px" src="images/Diagrama_em_branco(1).png"/></a></figure><p id="d1fe1567-fd1a-408e-947d-87ad9d05a22c" class="">
+</p><p id="78636af6-e62a-4dc3-aacd-273278f3d230" class="">
+</p><hr id="c16280d6-8787-4919-9616-81ee2f27752b"/><p id="977852c5-6807-4383-8b31-2e0f83e9483c" class="">
+</p><p id="34dc60eb-1286-4dbb-8994-d044d39f2647" class="">
+</p><ul id="4f7505c6-af73-42cf-8f12-278bb7c4cb2b" class="bulleted-list"><li style="list-style-type:disc"><strong>I - Interface Segregation Principle (Princípio da Segregação de Interfaces)</strong>:<ul id="13813b5a-89d6-4a85-bafd-b41fd6fd8dd8" class="bulleted-list"><li style="list-style-type:circle"><strong>Avaliação</strong>: A interface <code>CrudService</code> fornece métodos CRUD genéricos para qualquer tipo de entidade, o que é bom. No entanto, algumas classes que implementam essa interface podem não precisar de todos os métodos, o que pode violar o princípio da segregação de interfaces.</li></ul><ul id="30f3ce41-c807-4099-9f72-fd9a914a2884" class="bulleted-list"><li style="list-style-type:circle"><strong>Conclusão</strong>: Pode ser necessário revisar a interface para garantir que seja segregada o suficiente para as necessidades de todas as implementações.</li></ul></li></ul><p id="61060233-4efa-4fc7-a074-2cbf2a3799e5" class="">
+</p><p id="969ab1d0-4b9b-496a-9b22-5d7f0b7e6f5b" class="">
+</p><ul id="74220d21-dff9-4ad6-b97a-268d13095c0e" class="bulleted-list"><li style="list-style-type:disc"><strong>D - Dependency Inversion Principle (Princípio da Inversão de Dependência)</strong>:<ul id="059946f9-bbb5-4573-8caa-7fe1a803f854" class="bulleted-list"><li style="list-style-type:circle"><strong>Avaliação</strong>: O código usa a inversão de dependência ao depender de abstrações (<code>CrudService</code>) em vez de implementações concretas. Isso permite a flexibilidade de trocar facilmente a implementação subjacente sem modificar o código cliente.</li></ul><ul id="687a79b4-930f-4a14-a1ff-1d3bca758384" class="bulleted-list"><li style="list-style-type:circle"><strong>Conclusão</strong>: Parece estar em conformidade com o princípio da inversão de dependência.</li></ul></li></ul><p id="cfc2a4c9-1baf-4faf-8448-6c917aaf3e58" class="">
+</p><p id="f506e736-822b-4bb4-87ee-1d3049fae882" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
